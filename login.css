@@ -1,0 +1,84 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(84, 127, 245, 0.1);
+    width: 400px;
+    height: 400px;
+    text-align: center;
+    padding-right: 20px;
+    margin-right: 30px;
+}
+
+.login-container h2 {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.form-group input {
+    width: 60%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+a p{
+    text-align: left;
+    padding-left: 50px;
+    text-decoration:none;
+    color: black;
+}
+
+button {
+    width: 70%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.supervisor-login .student-login{
+    margin: 40px;
+}
+
+@media (max-width: 900px) {
+    .login-container body {
+        width: 90%;
+        margin-top: 20px;
+        margin: 0;
+    }
+    body, body .student-login {
+        display: block;
+        margin-top: 30px;
+    }
+    body{
+       padding: 50px;
+    }
+}
