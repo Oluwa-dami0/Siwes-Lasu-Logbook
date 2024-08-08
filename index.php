@@ -1,3 +1,26 @@
+<?php
+$request = $_SERVER['REQUEST_URI'];
+$path = trim(parse_url($request, PHP_URL_PATH), '/');
+$segments = explode('/', $path);
+
+// Handle the route
+switch($segments[0]) {
+    case 'week':
+        if(isset($segments[1])) {
+            $weekId = $segments[1];
+            include 'week.php';
+        } else {
+            // Handle user list or error
+        }
+        break;
+    // Add more cases as needed
+    default:
+        // Handle 404 or home page
+        include '404.php';
+        break;
+}
+ ?>
+
 <!DOCTYPE html>
 <html lang="en-us">
 
@@ -42,10 +65,16 @@
             <i class="ti-menu"></i>
          </button>
         <div class="nav-button">
-            <button onclick="location.href='Homepage.php'">Home</button>
+            <button onclick="location.href='index.php'">Home</button>
             <button onclick="location.href='Register.php'">Register</button>
             <button onclick="location.href='login.php'">Login</button>
-            <button onclick="location.href='Homepage.php'">Logout</button>
+            <?php
+            $user = "";
+               if (isset($user)) {
+                  echo "<button onclick=`location.href='Homepage.php'`>Logout</button>";
+               }
+            ?>
+           
         </div>
 
          </div>
