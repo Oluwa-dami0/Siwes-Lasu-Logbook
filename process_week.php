@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     
-    $stmt->bind_param("sii", $report, $week_id, $user_id);
+    $stmt->bind_param("sii", trim($report), $week_id, $user_id);
     if ($stmt->execute()) {
         echo "Report saved successfully!";
     } else {

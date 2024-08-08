@@ -1,17 +1,42 @@
 <?php
 
+require_once "conn.php";
+$week_id;
+$user_id = 1;
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
-    // Process the ID as needed
-    echo "The ID is: " . htmlspecialchars($id);
+    // echo "The ID is: " . htmlspecialchars($id);
+    $week_id = $id;
 } else {
     echo "No ID parameter provided.";
+    $week_id = null;
+    header("location: index"); 
+    exit();
 }
 
-require_once "conn.php";
-$week_id = 3;
-$user_id = 1;
+if ($week_id < 1 OR $week_id > 12) {
+    header("location: index");
+    exit();
+}
+$stmt = $conn->prepare("SELECT COUNT(*) FROM weekly_report WHERE user_id = ? AND id = ?");
+$stmt->bind_param("ii", $user_id, $week_id);
+$stmt->execute();
+$stmt->bind_result($count);
+$stmt->fetch();
+$stmt->close();
 
+if ($count == 0) {
+    $stmt = $conn->prepare("INSERT INTO weekly_report (user_id, id) VALUES (?, ?)");
+    $stmt->bind_param("ii", $user_id, $week_id);
+    $stmt->execute();
+    $stmt->close();
+
+    echo "Week entry created successfully.";
+} else {
+    echo "Week entry already exists.";
+}
+
+echo "------------------> User ID: ". $user_id . "\n Week id: ".$week_id;
 $stmt = $conn->prepare("SELECT monday, tuesday, wednesday, thursday, friday FROM weekly_report WHERE id = ? AND user_id = ?");
 $stmt->bind_param("ii", $week_id, $user_id);
 $stmt->execute();
@@ -88,7 +113,7 @@ $row = $result->fetch_assoc();
                         <div style="display: flex; gap: 10px;">
                             <textarea id="monday" class="report" style="border: 1px solid black; border-radius: 5px; padding: 10px;"
                                 placeholder=""   <?php if ($row["monday"] != ''){ ?> readonly <?php   } ?> name="monday">
-                                <?php echo $row["monday"] ?>
+                                <?php echo trim($row["monday"]) ?>
                             </textarea>
                             <button style="margin: 0; padding: 5px 10px; border-radius: 5px;" name="submit" class="bg-success text-white"
                             <?php if ($rows["monday"] != ''){ ?> disabled <?php   } ?>
@@ -107,7 +132,7 @@ $row = $result->fetch_assoc();
                     <div style="display: flex; gap: 10px;">
                             <textarea id="tuesday" class="report" style="border: 1px solid black; border-radius: 5px; padding: 10px;"
                                 placeholder=""  <?php if ( $row["tuesday"] != ""){ ?> readonly <?php   } ?> name="tuesday">
-                                <?php echo $row["tuesday"] ?>
+                                <?php echo trim($row["tuesday"]) ?>
                             </textarea>
                             <button style="margin: 0; padding: 5px 10px; border-radius: 5px;" name="submit" class="bg-success text-white"
                             <?php if ($row["tuesday"] != ''){ ?> disabled <?php   } ?>
@@ -126,7 +151,7 @@ $row = $result->fetch_assoc();
                     <div style="display: flex; gap: 10px;">
                             <textarea id="wednesday" class="report" style="border: 1px solid black; border-radius: 5px; padding: 10px;"
                                 placeholder=""  <?php if ($row["wednesday"] != ''){ ?> readonly <?php   } ?>  name="wednesday">
-                                <?php echo $row["wednesday"] ?>
+                                <?php echo trim($row["wednesday"]) ?>
                             </textarea>
                             <button style="margin: 0; padding: 5px 10px; border-radius: 5px;" name="submit" class="bg-success text-white"
                             <?php if ($row["wednesday"] != ''){ ?> disabled <?php   } ?>
@@ -148,7 +173,7 @@ $row = $result->fetch_assoc();
                             <?php if ($row["thursday"] != ''){ ?> readonly <?php   } ?>
                                 placeholder="" name="thursday"
                                 >
-                                <?php echo $row["thursday"] ?>
+                                <?php echo trim($row["thursday"]) ?>
                             </textarea>
                             <button style="margin: 0; padding: 5px 10px; border-radius: 5px;" name="submit" class="bg-success text-white"
                             <?php if ($row["thursday"] != ''){ ?> disabled <?php   } ?>
@@ -170,7 +195,7 @@ $row = $result->fetch_assoc();
                                 placeholder="" name="friday"
                                 <?php if ($row["friday"] != ''){ ?> readonly <?php   } ?>
                                 >
-                                <?php echo $row["friday"] ?>
+                                <?php echo trim($row["friday"]) ?>
                             </textarea>
                             <button style="margin: 0; padding: 5px 10px; border-radius: 5px;" name="submit" class="bg-success text-white"
                             <?php if ($row["friday"] != ''){ ?> disabled <?php   } ?>
