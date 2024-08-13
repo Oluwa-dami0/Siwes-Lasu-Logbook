@@ -47,7 +47,7 @@
             goToPage1();
          // Prevent default form submission
         function goToPage1(){
-            window.location.href = 'e-logbook.php'
+            window.location.href = 'dashboard.php'
         };})
 
         document.getElementById("supervisor-login").addEventListener("submit", function(event) {
