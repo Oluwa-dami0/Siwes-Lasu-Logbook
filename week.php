@@ -36,7 +36,7 @@ if ($count == 0) {
     echo "Week entry already exists.";
 }
 
-echo "------------------> User ID: ". $user_id . "\n Week id: ".$week_id;
+// echo "------------------> User ID: ". $user_id . "\n Week id: ".$week_id;
 $stmt = $conn->prepare("SELECT monday, tuesday, wednesday, thursday, friday FROM weekly_report WHERE id = ? AND user_id = ?");
 $stmt->bind_param("ii", $week_id, $user_id);
 $stmt->execute();
@@ -116,7 +116,7 @@ $row = $result->fetch_assoc();
                                 <?php echo trim($row["monday"]) ?>
                             </textarea>
                             <button style="margin: 0; padding: 5px 10px; border-radius: 5px;" name="submit" class="bg-success text-white"
-                            <?php if ($rows["monday"] != ''){ ?> disabled <?php   } ?>
+                            <?php if ($row["monday"] != ''){ ?> disabled <?php   } ?>
                             >save</button>
                         </div>
                     </form>
