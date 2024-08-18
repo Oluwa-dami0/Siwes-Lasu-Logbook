@@ -1,3 +1,33 @@
+<?php
+    include_once "conn.php";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $matricnumber = $_POST['matricnumber'];
+        $password = $_POST['password'];
+    
+        // Validate inputs
+        if (empty($matricnumber) || empty($password)) {
+            die("Username and password are required.");
+        }
+    
+        // Prepare and execute SQL statement
+        $stmt = $conn->prepare("SELECT password_hash FROM users WHERE matricnumber = ?");
+        $stmt->bind_param("s", $matricnumber);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($password_hash);
+        $stmt->fetch();
+    
+        // Verify password
+        if (password_verify($password, $password_hash)) {
+            echo "Login successful!";
+        } else {
+            echo "Invalid username or password.";
+        }
+    
+        $stmt->close();
+    }
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
