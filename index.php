@@ -55,26 +55,44 @@ switch($segments[0]) {
 <body>
 <!-- navigation -->
 <header class="sticky-top bg-white border-bottom border-default">
-   <div class="container">
-
+   <div class="container-fluid">
       <nav class="navbar navbar-expand-lg navbar-white">
          <a class="navbar-brand" href="">
             <img class="lasu-logo" width="65px" height="65px" src="Lasu_logo.jpg" alt="LogBook">
-         </a> <h4>Student Industrial Work Experience Scheme Logbook</h4>
+         </a> <h5>Student Industrial Work Experience Scheme Logbook</h5>
          <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
             <i class="ti-menu"></i>
          </button>
-        <div class="nav-button">
+        <div class="nav-button ml-auto">
             <a href="./" class="btn btn-primary">Home</a>
-            <a href="./register?type=student"  class="btn btn-primary">Register</a>
-            <a href="./login"  class="btn btn-primary">Login</a>
-            <?php
-            $user = "";
-               if (isset($user)) {
-                  echo "<button onclick=`location.href='Homepage.php'`>Logout</button>";
-               }
-            ?>
-           
+            <div class="nav-button ml-auto">
+        <div>
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Register
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" style="right: 100px; background-color: #fffff0;">
+            <li>
+               <a class="dropdown-item" href="./register?type=student">Student</a>
+            </li>
+            <li>
+               <a class="dropdown-item" href="./register?type=supervisor">Supervisor</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Login
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right" style="background-color: #fffff0;">
+            <ul>
+               <a class="dropdown-item" href="./login">Student</a>
+            </ul>
+            <ul>
+               <a class="dropdown-item" href="./supervisor_login">Supervisor</a>
+            </ul>
+          </ul>
+        </div>
+      </div>
         </div>
 
          </div>
