@@ -65,9 +65,9 @@ switch($segments[0]) {
             <i class="ti-menu"></i>
          </button>
         <div class="nav-button">
-            <button onclick="location.href='index.php'">Home</button>
-            <button onclick="location.href='Register.php'">Register</button>
-            <button onclick="location.href='login.php'">Login</button>
+            <a href="./" class="btn btn-primary">Home</a>
+            <a href="./register?type=student"  class="btn btn-primary">Register</a>
+            <a href="./login"  class="btn btn-primary">Login</a>
             <?php
             $user = "";
                if (isset($user)) {

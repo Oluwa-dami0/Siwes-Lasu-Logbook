@@ -5,7 +5,6 @@ $week_id;
 $user_id = 1;
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
-    // echo "The ID is: " . htmlspecialchars($id);
     $week_id = $id;
 } else {
     echo "No ID parameter provided.";

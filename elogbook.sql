@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 08, 2024 at 05:02 PM
+-- Generation Time: Aug 21, 2024 at 02:04 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -31,17 +31,20 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password_hash` varchar(100) NOT NULL,
+  `matric_number` int(11) NOT NULL,
+  `middle_name` varchar(20) DEFAULT NULL,
+  `name_of_company` varchar(100) DEFAULT NULL,
+  `address` varchar(120) DEFAULT NULL,
+  `user_type` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`) VALUES
-(1, 'John', 'Doe', 'john.doe@example.com', 'password123'),
-(2, 'Oluwasegun', 'Lawrence', 'lawrence.segun@gmail.com', 'password123');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `password_hash`, `matric_number`, `middle_name`, `name_of_company`, `address`, `user_type`) VALUES
+(3, 'OLUWASEGUN', 'LAWRENCE', '$2y$10$EIzlhwyiQU4etuTx3etmE.3cyjx8DFmxX7.Yd6B7VOhlyUsb2X/mW', 200591079, 'tunmise', 'ikeja', 'ikeja lagos', 1);
 
 -- --------------------------------------------------------
 
@@ -64,10 +67,7 @@ CREATE TABLE `weekly_report` (
 --
 
 INSERT INTO `weekly_report` (`user_id`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`) VALUES
-(1, 1, 'HOw are you doing today?\r\n', 'Met with the team', 'Drafted initial design', 'Reviewed design', 'Sent follow-up emails'),
-(1, 2, 'Prepared presentation slides', 'Rehearsed presentation', 'Attended client meeting', 'Reviewed client feedback', 'Updated project plan'),
-(1, 3, 'Accepted contract', '                                                            how are you?', '                                                            Im hungry', 'What\'s the problem?', NULL),
-(2, 2, 'How\'s it going?', 'Prepared presentation slides', 'stfu', 'what are you doing?', 'Did laundry');
+(1, 1, '                                                            how are you doing?', '                                                            Im okay?', '                                                            Good boy', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -80,6 +80,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `weekly_report`
+--
+ALTER TABLE `weekly_report`
+  ADD UNIQUE KEY `unique_user_week` (`user_id`,`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -87,7 +93,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

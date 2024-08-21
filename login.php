@@ -1,17 +1,17 @@
 <?php
     include_once "conn.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $matricnumber = $_POST['matricnumber'];
-        $password = $_POST['password'];
+        $matricnumber = $_POST['matric-number'];
+        $password = $_POST['st-password'];
     
         // Validate inputs
         if (empty($matricnumber) || empty($password)) {
-            die("Username and password are required.");
+            die("Matric number and password are required.");
         }
     
         // Prepare and execute SQL statement
-        $stmt = $conn->prepare("SELECT password_hash FROM users WHERE matricnumber = ?");
-        $stmt->bind_param("s", $matricnumber);
+        $stmt = $conn->prepare("SELECT password_hash FROM users WHERE matric_number = ?");
+        $stmt->bind_param("i", $matricnumber);
         $stmt->execute();
         $stmt->store_result();
         $stmt->bind_result($password_hash);
@@ -19,9 +19,9 @@
     
         // Verify password
         if (password_verify($password, $password_hash)) {
-            echo "Login successful!";
+            header("location: dashboard");
         } else {
-            echo "Invalid username or password.";
+            $login_err = "Invalid username or password.";
         }
     
         $stmt->close();
@@ -41,52 +41,55 @@
     <title>Siwes Logbook Login</title>
 </head>
 <body>
-<div class="login-container supervisor-login">
+<!-- <div class="login-container supervisor-login">
         <h2> Supervisor Login</h2>
         <form id="supervisor-login">
             <div class="form-group">
-                <label for="number">PF-Number</label>
-                <input type="number" id="number" name="PF-number" required>
+                <label for="pf-number">PF-Number</label>
+                <input type="number" id="pf-number" name="PF-number" required>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <label for="sp-password">Password</label>
+                <input type="password" id="sp-password" name="sp-password" required>
             </div>
             <a href="" class="forget-password"><p>Forgot password?</p></a>
             <button type="submit" onclick="goToPage2()">Login</button>
         </form>
-    </div> 
+    </div>  -->
 <div class="login-container student-login">
         <h2>Student Login</h2>
-        <form id="login-form">
+        <?php echo (!empty($login_err)) ? 
+            '<div style="color: red; background-color: #f8d7da; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: center;">' . $login_err . '</div>'
+             : ''; ?>
+        <form id="login-form"  action="" method="POST">
             <div class="form-group">
-                <label for="number">Matric number</label>
-                <input type="number" id="number" name="matric-number" required>
+                <label for="matric-number">Matric number</label>
+                <input type="number" id="matric-number" name="matric-number" required>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <label for="st-password">Password</label>
+                <input type="password" id="st-password" name="st-password" required>
             </div>
             <a href="" class="forget-password"><p>Forgot password?</p></a>
-            <button type="submit" onclick="goToPage1()" id="login" >Login</button>
+            <button type="submit" id="login" name="student-login" >Login</button>
         </form>
     </div> 
     <script> 
-        document.getElementById("login-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            goToPage1();
-         // Prevent default form submission
-        function goToPage1(){
-            window.location.href = 'dashboard.php'
-        };})
+        // document.getElementById("login-form").addEventListener("submit", function(event) {
+        //     event.preventDefault();
+        //     goToPage1();
+        //  // Prevent default form submission
+        // function goToPage1(){
+        //     window.location.href = 'dashboard.php'
+        // };})
 
-        document.getElementById("supervisor-login").addEventListener("submit", function(event) {
-            event.preventDefault();
-            goToPage2();
-         // Prevent default form submission
-        function goToPage2(){
-            window.location.href = 'supervisor.php'
-        };})
+        // document.getElementById("supervisor-login").addEventListener("submit", function(event) {
+        //     event.preventDefault();
+        //     goToPage2();
+        //  // Prevent default form submission
+        // function goToPage2(){
+        //     window.location.href = 'supervisor.php'
+        // };})
     </script>
 </body>
 </html>
