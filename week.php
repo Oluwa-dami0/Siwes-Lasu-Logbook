@@ -2,7 +2,9 @@
 
 require_once "conn.php";
 $week_id;
-$user_id = 1;
+$matric_no = 200591079;  // TODO: This should be the matric number of the currently logged in user
+$user_id = 1; // TODO: This should be the user ID of the currently logged in user
+
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $week_id = $id;
@@ -17,16 +19,17 @@ if ($week_id < 1 OR $week_id > 12) {
     header("location: index");
     exit();
 }
-$stmt = $conn->prepare("SELECT COUNT(*) FROM weekly_report WHERE user_id = ? AND id = ?");
-$stmt->bind_param("ii", $user_id, $week_id);
+
+$stmt = $conn->prepare("SELECT COUNT(*) FROM weekly_report WHERE matric_no = ? AND id = ?");
+$stmt->bind_param("ii", $matric_no, $week_id);
 $stmt->execute();
 $stmt->bind_result($count);
 $stmt->fetch();
 $stmt->close();
 
 if ($count == 0) {
-    $stmt = $conn->prepare("INSERT INTO weekly_report (user_id, id) VALUES (?, ?)");
-    $stmt->bind_param("ii", $user_id, $week_id);
+    $stmt = $conn->prepare("INSERT INTO weekly_report (user_id, id, matric_no) VALUES (?, ?, ?)");
+    $stmt->bind_param("iii", $user_id, $week_id, $matric_no);
     $stmt->execute();
     $stmt->close();
 
