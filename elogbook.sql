@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 21, 2024 at 02:04 PM
+-- Generation Time: Sep 01, 2024 at 09:54 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -59,15 +59,17 @@ CREATE TABLE `weekly_report` (
   `tuesday` text DEFAULT NULL,
   `wednesday` text DEFAULT NULL,
   `thursday` text DEFAULT NULL,
-  `friday` text DEFAULT NULL
+  `friday` text DEFAULT NULL,
+  `matric_no` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `weekly_report`
 --
 
-INSERT INTO `weekly_report` (`user_id`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`) VALUES
-(1, 1, '                                                            how are you doing?', '                                                            Im okay?', '                                                            Good boy', NULL, NULL);
+INSERT INTO `weekly_report` (`user_id`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `matric_no`) VALUES
+(1, 1, '                                                            how are you doing?', '                                                            Im okay?', '                                                            Good boy', NULL, NULL, 200591079),
+(1, 3, 'Im him', NULL, NULL, NULL, NULL, 200591079);
 
 --
 -- Indexes for dumped tables
