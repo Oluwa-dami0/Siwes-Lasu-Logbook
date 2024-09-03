@@ -1,32 +1,5 @@
 <?php
-    include_once "conn.php";
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $matricnumber = $_POST['matric-number'];
-        $password = $_POST['st-password'];
-    
-        // Validate inputs
-        if (empty($matricnumber) || empty($password)) {
-            die("Matric number and password are required.");
-        }
-    
-        // Prepare and execute SQL statement
-        $stmt = $conn->prepare("SELECT password_hash FROM users WHERE matric_number = ?");
-        $stmt->bind_param("i", $matricnumber);
-        $stmt->execute();
-        $stmt->store_result();
-        $stmt->bind_result($password_hash);
-        $stmt->fetch();
-    
-        // Verify password
-        if (password_verify($password, $password_hash)) {
-            header("location: dashboard");
-        } else {
-            $login_err = "Invalid username or password.";
-        }
-    
-        $stmt->close();
-    }
-    $conn->close();
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +14,35 @@
     <title>Siwes Logbook Login</title>
 </head>
 <body>
+<?php
+    include_once "conn.php";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $matricnumber = $_POST['matric-number'];
+        $password = $_POST['st-password'];
+    
+        if (empty($matricnumber) || empty($password)) {
+            die("Matric number and password are required.");
+        }
+    
+        $stmt = $conn->prepare("SELECT password_hash,id FROM users WHERE matric_number = ?");
+        $stmt->bind_param("i", $matricnumber);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($password_hash,$id);
+        $stmt->fetch();
+    
+        if (password_verify($password, $password_hash)) {
+            $_SESSION["matric_no"] = $matricnumber;
+            header("location: dashboard");
+            exit();
+        } else {
+            $login_err = "Invalid username or password.";
+        }
+    
+        $stmt->close();
+    }
+    $conn->close();
+?>
 <div class="login-container student-login">
         <h2>Student Login</h2>
         <?php echo (!empty($login_err)) ? 
@@ -59,22 +61,5 @@
             <button type="submit" id="login" name="student-login" >Login</button>
         </form>
     </div> 
-    <script> 
-        // document.getElementById("login-form").addEventListener("submit", function(event) {
-        //     event.preventDefault();
-        //     goToPage1();
-        //  // Prevent default form submission
-        // function goToPage1(){
-        //     window.location.href = 'dashboard.php'
-        // };})
-
-        // document.getElementById("supervisor-login").addEventListener("submit", function(event) {
-        //     event.preventDefault();
-        //     goToPage2();
-        //  // Prevent default form submission
-        // function goToPage2(){
-        //     window.location.href = 'supervisor.php'
-        // };})
-    </script>
 </body>
 </html>

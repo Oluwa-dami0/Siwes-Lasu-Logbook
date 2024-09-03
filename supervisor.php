@@ -7,7 +7,7 @@ $matricnumber = $_SESSION['matric-number'];
 if (isset($_GET['matric_no'])) {
     $matric_no = $_GET['matric_no'];
 
-    $stmt = $conn->prepare("SELECT * FROM weekly_report WHERE matric_no = ?");
+    $stmt = $conn->prepare("SELECT * FROM weekly_report WHERE matric_number = ?");
     
     if ($stmt == false) {
         die('Prepare failed: ' . $conn->error);
@@ -67,8 +67,8 @@ if (isset($_GET['matric_no'])) {
                 <i class="ti-menu"></i>
             </button>
             <div class="nav-button">
-                <button onclick="location.href='Homepage.php'">Home</button>
-                <button onclick="location.href='Homepage.php'">Logout</button>
+                <button onclick="location.href='index'">Home</button>
+                <button onclick="location.href='logout'">Logout</button>
             </div>
 
             </div>
@@ -94,7 +94,7 @@ if (isset($_GET['matric_no'])) {
     <table id="myTable" border="2" style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif;margin-top:10px;">
         <thead style="background-color: #f2f2f2; color: #333; font-weight: bold;">
             <tr>
-                <th style="padding: 8px; border: 1px solid #ddd;">S/N</th>
+                <th style="padding: 8px; border: 1px solid #ddd;">Week</th>
                 <th style="padding: 8px; border: 1px solid #ddd;">Monday</th>
                 <th style="padding: 8px; border: 1px solid #ddd;">Tuesday</th>
                 <th style="padding: 8px; border: 1px solid #ddd;">Wednesday</th>

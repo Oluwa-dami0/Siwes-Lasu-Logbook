@@ -1,3 +1,8 @@
+<?php
+   include("student_auth.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,8 +49,8 @@
          <a class="navbar-brand" href="">
             <img class="lasu-logo" width="75px" height="75px" src="Lasu_logo.jpg" alt="LogBook">
          </a> <h4>Student Industrial Work Experience Scheme Logbook</h4>
-         <button onclick="location.href='index.php'" style="margin-left:50px; width: 80px; font-size: 18px; font-weight:500;">
-            Logout</button>
+         <a href="./logout" style="margin-left:50px; width: 80px; font-size: 18px; font-weight:500; border: 1px solid black; padding: 5px 10px;">
+            Logout</a>
       </nav>
    </div>
 </header> 

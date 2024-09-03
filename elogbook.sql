@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 01, 2024 at 09:54 PM
+-- Generation Time: Sep 03, 2024 at 10:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -44,7 +44,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `password_hash`, `matric_number`, `middle_name`, `name_of_company`, `address`, `user_type`) VALUES
-(3, 'OLUWASEGUN', 'LAWRENCE', '$2y$10$EIzlhwyiQU4etuTx3etmE.3cyjx8DFmxX7.Yd6B7VOhlyUsb2X/mW', 200591079, 'tunmise', 'ikeja', 'ikeja lagos', 1);
+(1, 'OLUWASEGUN', 'LAWRENCE', '$2y$10$EIzlhwyiQU4etuTx3etmE.3cyjx8DFmxX7.Yd6B7VOhlyUsb2X/mW', 200591079, 'tunmise', 'ikeja', 'ikeja lagos', 1),
+(2, 'Sanni', 'Abdullah', '$2y$10$cQ.DyiSIMGIGzPZCupspCOze1ku9ilbM0xFYTwm9cXWAw8WsiiM8S', 200591123, '', 'Somewhere', '', 1);
 
 -- --------------------------------------------------------
 
@@ -53,23 +54,23 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `password_hash`, `matric_n
 --
 
 CREATE TABLE `weekly_report` (
-  `user_id` int(11) DEFAULT NULL,
+  `matric_number` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `monday` text DEFAULT NULL,
   `tuesday` text DEFAULT NULL,
   `wednesday` text DEFAULT NULL,
   `thursday` text DEFAULT NULL,
-  `friday` text DEFAULT NULL,
-  `matric_no` int(11) DEFAULT NULL
+  `friday` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `weekly_report`
 --
 
-INSERT INTO `weekly_report` (`user_id`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `matric_no`) VALUES
-(1, 1, '                                                            how are you doing?', '                                                            Im okay?', '                                                            Good boy', NULL, NULL, 200591079),
-(1, 3, 'Im him', NULL, NULL, NULL, NULL, 200591079);
+INSERT INTO `weekly_report` (`matric_number`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`) VALUES
+(200591079, 1, 'Hello world', 'How are you doing?', 'Im good', 'Is it', 'perfect'),
+(200591123, 2, 'Started something today', NULL, NULL, NULL, NULL),
+(200591079, 6, NULL, 'Im trying to do something', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -79,13 +80,15 @@ INSERT INTO `weekly_report` (`user_id`, `id`, `monday`, `tuesday`, `wednesday`, 
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_matric_number` (`matric_number`);
 
 --
 -- Indexes for table `weekly_report`
 --
 ALTER TABLE `weekly_report`
-  ADD UNIQUE KEY `unique_user_week` (`user_id`,`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `matric_number` (`matric_number`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -95,7 +98,23 @@ ALTER TABLE `weekly_report`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `weekly_report`
+--
+ALTER TABLE `weekly_report`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `weekly_report`
+--
+ALTER TABLE `weekly_report`
+  ADD CONSTRAINT `weekly_report_ibfk_1` FOREIGN KEY (`matric_number`) REFERENCES `users` (`matric_number`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
