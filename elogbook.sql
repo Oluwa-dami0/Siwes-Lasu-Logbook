@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2024 at 10:26 PM
+-- Generation Time: Sep 04, 2024 at 01:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -60,17 +60,19 @@ CREATE TABLE `weekly_report` (
   `tuesday` text DEFAULT NULL,
   `wednesday` text DEFAULT NULL,
   `thursday` text DEFAULT NULL,
-  `friday` text DEFAULT NULL
+  `friday` text DEFAULT NULL,
+  `week_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `weekly_report`
 --
 
-INSERT INTO `weekly_report` (`matric_number`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`) VALUES
-(200591079, 1, 'Hello world', 'How are you doing?', 'Im good', 'Is it', 'perfect'),
-(200591123, 2, 'Started something today', NULL, NULL, NULL, NULL),
-(200591079, 6, NULL, 'Im trying to do something', NULL, NULL, NULL);
+INSERT INTO `weekly_report` (`matric_number`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `week_id`) VALUES
+(200591079, 7, 'LAWRENCE SEGUN', NULL, NULL, NULL, NULL, 1),
+(200591079, 8, 'what\'s up?', NULL, NULL, NULL, NULL, 2),
+(200591123, 9, 'It\'s me mehn', NULL, NULL, NULL, NULL, 1),
+(200591123, 10, 'WOrking?', NULL, NULL, NULL, NULL, 2);
 
 --
 -- Indexes for dumped tables
@@ -104,7 +106,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `weekly_report`
 --
 ALTER TABLE `weekly_report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
