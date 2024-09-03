@@ -106,7 +106,7 @@ if (isset($_GET['matric_no'])) {
             <?php
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . htmlspecialchars($row['id']) . "</td>";
+                    echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . htmlspecialchars($row['week_id']) . "</td>";
                     echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . htmlspecialchars($row['monday']) . "</td>";
                     echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . htmlspecialchars($row['tuesday']) . "</td>";
                     echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . htmlspecialchars($row['wednesday']) . "</td>";

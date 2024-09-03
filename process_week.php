@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         return;
     }
 
-    $stmt = $conn->prepare("UPDATE `weekly_report` SET `$day` = CASE WHEN `$day` IS NULL THEN ? ELSE `$day` END WHERE `id` = ? AND `matric_number` = ?");
+    $stmt = $conn->prepare("UPDATE `weekly_report` SET `$day` = CASE WHEN `$day` IS NULL THEN ? ELSE `$day` END WHERE `week_id` = ? AND `matric_number` = ?");
      if (!$stmt) {
         $error = $conn->error;
         echo "Error saving report: An unexpected error occurred. Please try again later.";

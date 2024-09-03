@@ -20,7 +20,7 @@ if ($week_id < 1 OR $week_id > 12) {
     exit();
 }
 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM weekly_report WHERE matric_number = ? AND id = ?");
+$stmt = $conn->prepare("SELECT COUNT(*) FROM weekly_report WHERE matric_number = ? AND week_id = ?");
 $stmt->bind_param("ii", $matric_no, $week_id);
 $stmt->execute();
 $stmt->bind_result($count);
@@ -28,13 +28,13 @@ $stmt->fetch();
 $stmt->close();
 
 if ($count == 0) {
-    $stmt = $conn->prepare("INSERT INTO weekly_report (id, matric_number) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO weekly_report (week_id, matric_number) VALUES (?, ?)");
     $stmt->bind_param("ii", $week_id, $matric_no);
     $stmt->execute();
     $stmt->close();
 } 
 
-$stmt = $conn->prepare("SELECT monday, tuesday, wednesday, thursday, friday FROM weekly_report WHERE id = ? AND matric_number = ?");
+$stmt = $conn->prepare("SELECT monday, tuesday, wednesday, thursday, friday FROM weekly_report WHERE week_id = ? AND matric_number = ?");
 $stmt->bind_param("ii", $week_id, $matric_no);
 $stmt->execute();
 $result = $stmt->get_result();
