@@ -13,9 +13,10 @@
             
             default:
                 header("location: ./");
+                exit();
         }
     } else {
-        header("location: index"); 
+        header("location: "); 
         exit();
     }
 
@@ -56,6 +57,8 @@
                 $stmt->bind_param("sssisssi", $first_name, $last_name, $middle_name, $matric_no, $hashed_password, $name_of_company, $address, $user_type);
                 if ($stmt->execute()) {
                     echo "Registration successful!";
+                    sleep(1);
+                    header("location: login.php");
                 } else {
                     echo "Error: running statement ";
                 }
