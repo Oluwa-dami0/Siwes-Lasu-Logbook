@@ -1,9 +1,9 @@
 <?php
 
+include ("student_auth.php");
 require_once "conn.php";
 $week_id;
-$matric_no = 200591079;  // TODO: This should be the matric number of the currently logged in user
-$user_id = 1; // TODO: This should be the user ID of the currently logged in user
+$matric_no = $_SESSION["matric_no"];
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
@@ -20,7 +20,7 @@ if ($week_id < 1 OR $week_id > 12) {
     exit();
 }
 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM weekly_report WHERE matric_no = ? AND id = ?");
+$stmt = $conn->prepare("SELECT COUNT(*) FROM weekly_report WHERE matric_number = ? AND id = ?");
 $stmt->bind_param("ii", $matric_no, $week_id);
 $stmt->execute();
 $stmt->bind_result($count);
@@ -28,19 +28,14 @@ $stmt->fetch();
 $stmt->close();
 
 if ($count == 0) {
-    $stmt = $conn->prepare("INSERT INTO weekly_report (user_id, id, matric_no) VALUES (?, ?, ?)");
-    $stmt->bind_param("iii", $user_id, $week_id, $matric_no);
+    $stmt = $conn->prepare("INSERT INTO weekly_report (id, matric_number) VALUES (?, ?)");
+    $stmt->bind_param("ii", $week_id, $matric_no);
     $stmt->execute();
     $stmt->close();
+} 
 
-    echo "Week entry created successfully.";
-} else {
-    echo "Week entry already exists.";
-}
-
-// echo "------------------> User ID: ". $user_id . "\n Week id: ".$week_id;
-$stmt = $conn->prepare("SELECT monday, tuesday, wednesday, thursday, friday FROM weekly_report WHERE id = ? AND user_id = ?");
-$stmt->bind_param("ii", $week_id, $user_id);
+$stmt = $conn->prepare("SELECT monday, tuesday, wednesday, thursday, friday FROM weekly_report WHERE id = ? AND matric_number = ?");
+$stmt->bind_param("ii", $week_id, $matric_no);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
@@ -89,7 +84,7 @@ $row = $result->fetch_assoc();
     <header class="sticky-top bg-white border-bottom border-default">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-white">
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="./dashboard">
                     <img class="lasu-logo" width="75px" height="75px" src="Lasu_logo.jpg" alt="LogBook">
                 </a>
                 <h4>Student Industrial Work Experience Scheme Logbook</h4>
@@ -111,7 +106,7 @@ $row = $result->fetch_assoc();
                         <p class="" style="font-weight: bold; font-size: 15px;"> Monday</p>
                     </td>
                     <td>
-                <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=monday&user_id=<?php echo $user_id; ?>">
+                <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=monday&matric_no=<?php echo $matric_no; ?>">
                         <div style="display: flex; gap: 10px;">
                             <textarea id="monday" class="report" style="border: 1px solid black; border-radius: 5px; padding: 10px;"
                                 placeholder=""   <?php if ($row["monday"] != ''){ ?> readonly <?php   } ?> name="monday">
@@ -130,7 +125,7 @@ $row = $result->fetch_assoc();
                     </td>
                     <td>
 
-                    <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=tuesday&user_id=<?php echo $user_id; ?>">
+                    <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=tuesday&matric_no=<?php echo $matric_no; ?>">
                     <div style="display: flex; gap: 10px;">
                             <textarea id="tuesday" class="report" style="border: 1px solid black; border-radius: 5px; padding: 10px;"
                                 placeholder=""  <?php if ( $row["tuesday"] != ""){ ?> readonly <?php   } ?> name="tuesday">
@@ -149,7 +144,7 @@ $row = $result->fetch_assoc();
                     </td>
                     <td>
 
-                    <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=wednesday&user_id=<?php echo $user_id; ?>">
+                    <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=wednesday&matric_no=<?php echo $matric_no; ?>">
                     <div style="display: flex; gap: 10px;">
                             <textarea id="wednesday" class="report" style="border: 1px solid black; border-radius: 5px; padding: 10px;"
                                 placeholder=""  <?php if ($row["wednesday"] != ''){ ?> readonly <?php   } ?>  name="wednesday">
@@ -168,7 +163,7 @@ $row = $result->fetch_assoc();
                     </td>
                     <td>
 
-                    <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=thursday&user_id=<?php echo $user_id; ?>">
+                    <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=thursday&matric_no=<?php echo $matric_no; ?>">
                     <div style="display: flex; gap: 10px;">
                             <textarea id="thursday" class="report" style="border: 1px solid black; border-radius: 5px;" 
                             rows="3"
@@ -190,7 +185,7 @@ $row = $result->fetch_assoc();
                     </td>
                     <td>
                 
-                    <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=friday&user_id=<?php echo $user_id; ?>">
+                    <form method="POST" action="process_week.php?week_id=<?php echo $week_id; ?>&day=friday&matric_no=<?php echo $matric_no; ?>">
                     <div style="display: flex; gap: 10px;">
                             <textarea id="friday" class="report" style="border: 1px solid black; border-radius: 5px; text-align: left;" 
                             rows="3"

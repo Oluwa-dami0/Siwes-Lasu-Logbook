@@ -55,7 +55,7 @@
             if ($stmt) {
                 $stmt->bind_param("sssisssi", $first_name, $last_name, $middle_name, $matric_no, $hashed_password, $name_of_company, $address, $user_type);
                 if ($stmt->execute()) {
-                    echo "Registration successful!";
+                    header("location: login");
                 } else {
                     echo "Error: running statement ";
                 }
