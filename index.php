@@ -74,9 +74,9 @@ switch($segments[0]) {
             <li>
                <a class="dropdown-item" href="./register?type=student">Student</a>
             </li>
-            <li>
+            <!--<li>
                <a class="dropdown-item" href="./register?type=supervisor">Supervisor</a>
-            </li>
+            </li>-->
           </ul>
         </div>
         <div>

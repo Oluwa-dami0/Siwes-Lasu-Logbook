@@ -3,7 +3,7 @@
     require_once 'conn.php';
     session_start();
 
-    
+$matricnumber = $_SESSION['matric-number'];
 if (isset($_GET['matric_no'])) {
     $matric_no = $_GET['matric_no'];
 
