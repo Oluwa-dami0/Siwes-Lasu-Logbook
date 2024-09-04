@@ -1,5 +1,8 @@
 <?php
    include("student_auth.php");
+   require_once "conn.php";
+
+   $matric_no = $_SESSION["matric_no"];
 
 ?>
 
@@ -16,10 +19,8 @@
    <meta name="description" content="This is meta description">
    <meta name="author" content="Themefisher">
  
-   <!-- theme meta -->
    <meta name="theme-name" content="logbook" />
 
-   <!-- plugins -->
    <link rel="preload" href="https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFWJ0bbck.woff2" style="font-display: optional;">
    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:600%7cOpen&#43;Sans&amp;display=swap" media="screen">
@@ -27,17 +28,16 @@
    <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
    <link rel="stylesheet" href="plugins/slick/slick.css">
 
-   <!-- Main Stylesheet -->
    <link rel="stylesheet" href="dashboard.css">
 
-   <!--Favicon-->
    <link rel="shortcut icon" href="Lasu_logo.jpg" type="image/x-icon">
    <link rel="icon" href="Lasu_logo.jpg" type="image/x-icon">
 
    <style>
-    /* Additional inline style for hiding the table initially */
     #myTable {
-        display: none;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        margin-top: 10px;
     }
 </style>
 </head>
@@ -54,21 +54,49 @@
       </nav>
    </div>
 </header> 
-<h3> Student Weekly Report</h3>
-<div class="weeks">
-    <div><a href="week?id=1">Week 1</a></div>
-    <div><a href="week?id=2">Week 2</a></div>
-    <div><a href="week?id=3">Week 3</a></div>
-    <div><a href="week?id=4">Week 4</a></div>
-    <div><a href="week?id=5">Week 5</a></div>
-    <div><a href="week?id=6">Week 6</a></div>
-    <div><a href="week?id=7">Week 7</a></div>
-    <div><a href="week?id=8">Week 8</a></div>
-    <div><a href="week?id=9">Week 9</a></div>
-    <div><a href="week?id=10">Week 10</a></div>
-    <div><a href="week?id=11">Week 11</a></div>
-    <div><a href="week?id=12">Week 12</a></div>
+<div style="margin-top: 30px;">
+    <h3>Student Weekly Report</h3>
+    <div 
+        style="
+            display: grid;
+            grid-template-columns: 1fr 3fr; 
+            grid-gap: 20px
+        ">   
+        <div class="weeks" style="border-right: 1px solid #ddd; padding-right: 20px;">
+            <?php
+                for ($i = 1; $i <= 12; $i++) {
+                    echo "<div><a href='week?id=$i'>Week $i</a></div>";
+                }
+            ?>
+        </div>
+        <div>
+            <h5>Comments</h5>
+            <table border="2" style="border-collapse: collapse;font-family: Arial, sans-serif; width:80%">
+                <thead style="background-color: #f2f2f2; color: #333; font-weight: bold;">
+                    <tr>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Week</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $stmt = $conn->prepare("SELECT week, comment FROM comments WHERE matric_number = ?");
+                        $stmt->bind_param("i", $matric_no);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . htmlspecialchars($row['week']) . "</td>";
+                            echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . htmlspecialchars($row['comment']) . "</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-
+</body>
+</html>
     

@@ -53,6 +53,71 @@ if (isset($_GET['matric_no'])) {
    <!--Favicon-->
    <link rel="shortcut icon" href="Lasu_logo.jpg" type="image/x-icon">
    <link rel="icon" href="Lasu_logo.jpg" type="image/x-icon">
+
+   <style>
+        .form-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        h5 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        textarea, select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        #s-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #commentSection {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fafafa;
+            display: none; /* Initially hide the comment section */
+        }
+
+        #commentDisplay {
+            margin: 0;
+            color: #333;
+        }
+   </style>
 </head>
 </head>
 <body>
@@ -117,8 +182,33 @@ if (isset($_GET['matric_no'])) {
             ?>
         </tbody>
     </table>
+    <div class="form-container">
+        <h5>Submit a comment about this report</h5>
+        <form id="commentForm"
+            action="comment.php"
+            method="POST"
+            style="margin-top: 10px;"
+        >
+            <input type="hidden" name="matric_no" value="<?php echo $matric_no; ?>">
+            <div>
+                <label for="week">Select Week</label>
+                <select name="week" id="week" style="width: 100%; padding: 5px;">
+                    <?php 
+                        for ($i = 1; $i <= 12; $i++) {
+                            echo "<option value='$i'>Week $i</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div>      
+                <label for="comment">Comment:</label>
+                <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+            </div>
+            <br>
+            <button id="s-btn">submit</button>
+        </form>
+    </div>
     <?php endif; ?>
 </div>
-
 </body>
 </html>

@@ -203,9 +203,6 @@ $row = $result->fetch_assoc();
                 </tr>
             </tbody>
         </table>
-        <!-- <div class="d-flex justify-content-center">
-            <button style="border-radius: 0; width: 40%; margin: 10px 0; padding: 15px 0;">Submit</button>
-        </div> -->
     </div>
 </body>
 
