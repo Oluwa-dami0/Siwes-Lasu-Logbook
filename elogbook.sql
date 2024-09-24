@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 04, 2024 at 10:35 AM
+-- Generation Time: Sep 24, 2024 at 02:19 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -43,7 +43,33 @@ INSERT INTO `comments` (`id`, `matric_number`, `week`, `comment`) VALUES
 (2, 200591079, 4, 'It\'s pretty impressive'),
 (3, 200591123, 1, 'Good job man'),
 (4, 200591123, 1, 'You havent done anything for week 1'),
-(5, 200591079, 4, 'Why is there nothing for week 4?');
+(5, 200591079, 4, 'Why is there nothing for week 4?'),
+(6, 200591079, 10, 'Hello world'),
+(7, 200591079, 12, 'What\'s up');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supervisors`
+--
+
+CREATE TABLE `supervisors` (
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `pf_number` int(20) NOT NULL,
+  `password_hash` text NOT NULL,
+  `middle_name` varchar(50) NOT NULL,
+  `user_type` int(11) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supervisors`
+--
+
+INSERT INTO `supervisors` (`first_name`, `last_name`, `pf_number`, `password_hash`, `middle_name`, `user_type`, `id`) VALUES
+('OLUWASEGUN', 'LAWRENCE', 12341234, '$2y$10$j7w8W3Bl6oQNudJDlKc11OmTb6BM5i49cXolH3A6HM.cxaTG0rEZe', '', 2, 1),
+('john', 'doe', 12345678, '$2y$10$1qnHSGxbBgrOlB56t/YKAOtcHxadB7NmiNb./tTWY9IznMudXjyz6', '', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -93,7 +119,7 @@ CREATE TABLE `weekly_report` (
 --
 
 INSERT INTO `weekly_report` (`matric_number`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `week_id`) VALUES
-(200591079, 7, 'LAWRENCE SEGUN', NULL, NULL, NULL, NULL, 1),
+(200591079, 7, 'LAWRENCE SEGUN', 'Something new', NULL, NULL, NULL, 1),
 (200591079, 8, 'what\'s up?', NULL, NULL, NULL, NULL, 2),
 (200591123, 9, 'It\'s me mehn', NULL, NULL, NULL, NULL, 1),
 (200591123, 10, 'WOrking?', NULL, NULL, NULL, NULL, 2),
@@ -108,6 +134,12 @@ INSERT INTO `weekly_report` (`matric_number`, `id`, `monday`, `tuesday`, `wednes
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `supervisors`
+--
+ALTER TABLE `supervisors`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -132,7 +164,13 @@ ALTER TABLE `weekly_report`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `supervisors`
+--
+ALTER TABLE `supervisors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
