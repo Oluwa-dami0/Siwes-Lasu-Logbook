@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
-<<<<<<< HEAD
--- Generation Time: Aug 21, 2024 at 02:04 PM
-=======
 -- Generation Time: Sep 24, 2024 at 02:19 PM
->>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -28,8 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
-=======
 -- Table structure for table `comments`
 --
 
@@ -80,7 +74,6 @@ INSERT INTO `supervisors` (`first_name`, `last_name`, `pf_number`, `password_has
 -- --------------------------------------------------------
 
 --
->>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 -- Table structure for table `users`
 --
 
@@ -123,10 +116,6 @@ CREATE TABLE `weekly_report` (
 -- Dumping data for table `weekly_report`
 --
 
-<<<<<<< HEAD
-INSERT INTO `weekly_report` (`user_id`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`) VALUES
-(1, 1, '                                                            how are you doing?', '                                                            Im okay?', '                                                            Good boy', NULL, NULL);
-=======
 INSERT INTO `weekly_report` (`matric_number`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `week_id`) VALUES
 (200591079, 7, 'LAWRENCE SEGUN', 'Something new', NULL, NULL, NULL, 1),
 (200591079, 8, 'what\'s up?', NULL, NULL, NULL, NULL, 2),
@@ -134,15 +123,12 @@ INSERT INTO `weekly_report` (`matric_number`, `id`, `monday`, `tuesday`, `wednes
 (200591123, 10, 'WOrking?', NULL, NULL, NULL, NULL, 2),
 (200591079, 11, 'What\'s up?', NULL, NULL, NULL, NULL, 3),
 (200591079, 12, 'Here it\'s my nigga', NULL, NULL, NULL, NULL, 4);
->>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 
 --
 -- Indexes for dumped tables
 --
 
 --
-<<<<<<< HEAD
-=======
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
@@ -155,7 +141,6 @@ ALTER TABLE `supervisors`
   ADD PRIMARY KEY (`id`);
 
 --
->>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -172,8 +157,6 @@ ALTER TABLE `weekly_report`
 --
 
 --
-<<<<<<< HEAD
-=======
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
@@ -186,7 +169,6 @@ ALTER TABLE `supervisors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
->>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`

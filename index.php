@@ -10,15 +10,12 @@ switch($segments[0]) {
             $weekId = $segments[1];
             include 'week.php';
         } else {
-
-        }
+         // Handle 404 or home page
+        //include '404.php';
+        
+      }
         break;
     default:
-<<<<<<< HEAD
-        // Handle 404 or home page
-        //include '404.php';
-=======
->>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
         break;
 }
  ?>
