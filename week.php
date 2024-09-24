@@ -88,6 +88,7 @@ $row = $result->fetch_assoc();
                     <img class="lasu-logo" width="75px" height="75px" src="Lasu_logo.jpg" alt="LogBook">
                 </a>
                 <h4>Student Industrial Work Experience Scheme Logbook</h4>
+                <button onclick="location.href='dashboard'">Logout</button>
             </nav>
         </div>
     </header>

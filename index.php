@@ -16,7 +16,7 @@ switch($segments[0]) {
     // Add more cases as needed
     default:
         // Handle 404 or home page
-        include '404.php';
+        //include '404.php';
         break;
 }
  ?>
@@ -136,7 +136,7 @@ switch($segments[0]) {
 				<article class="row mb-5">
 					<div class="col-12">
 						<div class="about-siwes-img">
-							<img src="siwes_logbook.jpg" class="img-fluid" alt="">
+							<img src="siwes_logbook.jpg" class="img-fluid" alt="" style="height: 500px;">
 						</div>
 					</div>
 					<div class="col-12 mx-auto">
