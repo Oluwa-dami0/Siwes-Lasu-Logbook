@@ -1,81 +1,115 @@
 <?php
-    include_once "conn.php";
-    $user_type;
-    if (isset($_GET['type'])) {
-        $val = $_GET['type'];
-        switch ($val) {
-            case 'student':
-                $user_type =  1;
-                break;
-            case 'supervisor':
-                $user_type =  2;
-                break;
-            
-            default:
-                header("location: ./");
-                exit();
-        }
-    } else {
-        header("location: "); 
+include_once "conn.php";
+$user_type;
+if (isset($_GET['type'])) {
+    $val = $_GET['type'];
+    switch ($val) {
+        case 'student':
+            $user_type = 1;
+            break;
+        case 'supervisor':
+            $user_type = 2;
+            break;
+
+        default:
+            header("location: ./");
+            exit();
+    }
+} else {
+    header("location: index");
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" AND isset($_POST["student-reg"]) ) {
+    $first_name = htmlspecialchars(trim($_POST["firstname"] ?? ''));
+    $last_name = htmlspecialchars(trim($_POST["lastname"] ?? ''));
+    $middle_name = htmlspecialchars(trim($_POST["middlename"] ?? ''));
+    $matric_no = isset($_POST["matric-number"]) ? (int) $_POST["matric-number"] : 0;
+    $password = $_POST["password"] ?? '';
+    $name_of_company = htmlspecialchars(trim($_POST["name_of_company"] ?? ''));
+    $address = htmlspecialchars(trim($_POST["address"] ?? ''));
+
+    if (strlen($password) < 8) {
+        echo "Password must be at least 8 characters long.";
         exit();
     }
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $first_name = htmlspecialchars(trim($_POST["firstname"] ?? ''));
-        $last_name = htmlspecialchars(trim($_POST["lastname"] ?? ''));
-        $middle_name = htmlspecialchars(trim($_POST["middlename"] ?? ''));
-        $matric_no = isset($_POST["matric-number"]) ? (int) $_POST["matric-number"] : 0;
-        $password = $_POST["password"] ?? '';
-        $name_of_company = htmlspecialchars(trim($_POST["name_of_company"] ?? ''));
-        $address = htmlspecialchars(trim($_POST["address"] ?? ''));
 
-        if (strlen($password) < 8) {
-            echo "Password must be at least 8 characters long.";
-            exit();
-        }
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-        // echo "First Name: $first_name <br>";
-        // echo "Last Name: $last_name <br>";
-        // echo "Middle Name: $middle_name <br>";
-        // echo "Matric Number: $matric_no <br>";
-        // echo "Password: $hashed_password <br>";
-        // echo "Name of Company: $name_of_company <br>";
-        // echo "Address: $address <br>";
-        // echo "User Type: $user_type <br>";
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE matric_number = ?");
+    $stmt->bind_param("i", $matric_no);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
 
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE matric_number = ?");
-        $stmt->bind_param("i", $matric_no);
-        $stmt->execute();
-        $stmt->bind_result($count);
-        $stmt->fetch();
-        $stmt->close();
-
-        if ($count == 0){
-            $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, middle_name, matric_number, password_hash, name_of_company, address, user_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            if ($stmt) {
-                $stmt->bind_param("sssisssi", $first_name, $last_name, $middle_name, $matric_no, $hashed_password, $name_of_company, $address, $user_type);
-                if ($stmt->execute()) {
-                    echo "Registration successful!";
-                    sleep(1);
-                    header("location: login.php");
-                } else {
-                    echo "Error: running statement ";
-                }
-    
+    if ($count == 0) {
+        $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, middle_name, matric_number, password_hash, name_of_company, address, user_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        if ($stmt) {
+            $stmt->bind_param("sssisssi", $first_name, $last_name, $middle_name, $matric_no, $hashed_password, $name_of_company, $address, $user_type);
+            if ($stmt->execute()) {
+                echo "Registration successful!";
+                sleep(1);
+                header("location: login.php");
             } else {
-                echo "Error preparing statement: ";
+                echo "Error: running statement ";
             }
-            
-            $stmt->close();
-        }else{
-           $user_exists_err = "User with matric number <b> $matric_no </b> already exists.";
+
+        } else {
+            echo "Error preparing statement: ";
         }
-    
-    
+
+        $stmt->close();
+    } else {
+        $user_exists_err = "User with matric number <b> $matric_no </b> already exists.";
     }
 
-    
+} elseif (isset($_POST["supervisor-reg"])) {
+    $first_name = htmlspecialchars(trim($_POST["firstname"] ?? ''));
+    $last_name = htmlspecialchars(trim($_POST["lastname"] ?? ''));
+    $middle_name = htmlspecialchars(trim($_POST["middlename"] ?? ''));
+    $pf_no = isset($_POST["pf-number"]) ? (int) $_POST["pf-number"] : 0;
+    $password = $_POST["password"] ?? '';
+
+    if (strlen($password) < 8) {
+        echo "Password must be at least 8 characters long.";
+        exit();
+    }
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM supervisors WHERE pf_number = ?");
+    $stmt->bind_param("i", $pf_no);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($count == 0) {
+        $stmt = $conn->prepare("INSERT INTO supervisors (first_name, last_name, middle_name, pf_number, password_hash, user_type) VALUES (?, ?, ?, ?, ?, ?)");
+        if ($stmt) {
+            $stmt->bind_param("sssisi", $first_name, $last_name, $middle_name, $pf_no, $hashed_password, $user_type);
+            if ($stmt->execute()) {
+                echo "Registration successful!";
+                sleep(1);
+                header("location: supervisor_login");
+            } else {
+                echo "Error: running statement ";
+            }
+
+        } else {
+            echo "Error preparing statement: ";
+        }
+
+        $stmt->close();
+    } else {
+        $supervisor_exists_err = "User with PF number <b> $pf_no </b> already exists.";
+    }
+
+
+}
+
+
 
 ?>
 
@@ -152,6 +186,9 @@
     </style>
 </head>
 <body>
+<?php
+        if ($user_type == 1):
+        ?>
     <div class="container">
         <div>
 
@@ -183,8 +220,38 @@
             <label for="address">Address: <i>optional</i> </label>
             <input id="address" name="address" />
             
-            <button type="submit">Register</button>
+            <button type="submit" name="student-reg">Register</button>
         </form>
     </div>
+    <?php elseif ($user_type == 2):  ?>
+        <div class="container">
+        <div>
+
+            <?php echo (!empty($supervisor_exists_err)) ? 
+            '<div style="color: red; background-color: #f8d7da; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: center;">' . $supervisor_exists_err . '</div>'
+             : ''; ?>
+        </div>
+    
+        <h1>Registration Form</h1>
+        <form action="" method="post">
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+            
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+            
+            <label for="middlename">Middle Name: <i>optional</i>  </label>
+            <input type="text" id="middlename" name="middlename">
+            
+            <label for="pf-number">PF Number:</label>
+            <input type="number" id="pf-number" name="pf-number" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit" name="supervisor-reg">Register</button>
+        </form>
+    </div>
+    <?php endif; ?>
 </body>
 </html>

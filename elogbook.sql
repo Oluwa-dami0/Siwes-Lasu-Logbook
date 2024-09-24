@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
+<<<<<<< HEAD
 -- Generation Time: Aug 21, 2024 at 02:04 PM
+=======
+-- Generation Time: Sep 24, 2024 at 02:19 PM
+>>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,6 +28,59 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
+=======
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `matric_number` int(11) DEFAULT NULL,
+  `week` int(11) DEFAULT NULL,
+  `comment` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `matric_number`, `week`, `comment`) VALUES
+(1, 200591079, 2, 'It\'s not okay'),
+(2, 200591079, 4, 'It\'s pretty impressive'),
+(3, 200591123, 1, 'Good job man'),
+(4, 200591123, 1, 'You havent done anything for week 1'),
+(5, 200591079, 4, 'Why is there nothing for week 4?'),
+(6, 200591079, 10, 'Hello world'),
+(7, 200591079, 12, 'What\'s up');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supervisors`
+--
+
+CREATE TABLE `supervisors` (
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `pf_number` int(20) NOT NULL,
+  `password_hash` text NOT NULL,
+  `middle_name` varchar(50) NOT NULL,
+  `user_type` int(11) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supervisors`
+--
+
+INSERT INTO `supervisors` (`first_name`, `last_name`, `pf_number`, `password_hash`, `middle_name`, `user_type`, `id`) VALUES
+('OLUWASEGUN', 'LAWRENCE', 12341234, '$2y$10$j7w8W3Bl6oQNudJDlKc11OmTb6BM5i49cXolH3A6HM.cxaTG0rEZe', '', 2, 1),
+('john', 'doe', 12345678, '$2y$10$1qnHSGxbBgrOlB56t/YKAOtcHxadB7NmiNb./tTWY9IznMudXjyz6', '', 2, 2);
+
+-- --------------------------------------------------------
+
+--
+>>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 -- Table structure for table `users`
 --
 
@@ -66,14 +123,39 @@ CREATE TABLE `weekly_report` (
 -- Dumping data for table `weekly_report`
 --
 
+<<<<<<< HEAD
 INSERT INTO `weekly_report` (`user_id`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`) VALUES
 (1, 1, '                                                            how are you doing?', '                                                            Im okay?', '                                                            Good boy', NULL, NULL);
+=======
+INSERT INTO `weekly_report` (`matric_number`, `id`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `week_id`) VALUES
+(200591079, 7, 'LAWRENCE SEGUN', 'Something new', NULL, NULL, NULL, 1),
+(200591079, 8, 'what\'s up?', NULL, NULL, NULL, NULL, 2),
+(200591123, 9, 'It\'s me mehn', NULL, NULL, NULL, NULL, 1),
+(200591123, 10, 'WOrking?', NULL, NULL, NULL, NULL, 2),
+(200591079, 11, 'What\'s up?', NULL, NULL, NULL, NULL, 3),
+(200591079, 12, 'Here it\'s my nigga', NULL, NULL, NULL, NULL, 4);
+>>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 
 --
 -- Indexes for dumped tables
 --
 
 --
+<<<<<<< HEAD
+=======
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `supervisors`
+--
+ALTER TABLE `supervisors`
+  ADD PRIMARY KEY (`id`);
+
+--
+>>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -90,6 +172,21 @@ ALTER TABLE `weekly_report`
 --
 
 --
+<<<<<<< HEAD
+=======
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `supervisors`
+--
+ALTER TABLE `supervisors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+>>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`

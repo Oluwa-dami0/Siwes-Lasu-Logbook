@@ -1,7 +1,9 @@
 <?php
 
-    require_once 'conn.php';
-    session_start();
+include("supervisor_auth.php");
+require_once 'conn.php';    
+
+$pf = $_SESSION["pf_number"];
 
 $matricnumber = $_SESSION['matric-number'];
 if (isset($_GET['matric_no'])) {

@@ -10,13 +10,15 @@ switch($segments[0]) {
             $weekId = $segments[1];
             include 'week.php';
         } else {
-            // Handle user list or error
+
         }
         break;
-    // Add more cases as needed
     default:
+<<<<<<< HEAD
         // Handle 404 or home page
         //include '404.php';
+=======
+>>>>>>> 4d2d10f1830f56e7064518369b3ccbf808deebd8
         break;
 }
  ?>
@@ -74,9 +76,9 @@ switch($segments[0]) {
             <li>
                <a class="dropdown-item" href="./register?type=student">Student</a>
             </li>
-            <!--<li>
+            <li>
                <a class="dropdown-item" href="./register?type=supervisor">Supervisor</a>
-            </li>-->
+            </li>
           </ul>
         </div>
         <div>
